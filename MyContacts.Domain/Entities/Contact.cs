@@ -1,7 +1,4 @@
 ﻿using MyContacts.Domain.Core.Models;
-using MyContacts.Domain.Enums;
-using System.Net.Http.Headers;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MyContacts.Domain.Entities
 {
@@ -13,8 +10,9 @@ namespace MyContacts.Domain.Entities
         public string? Email { get; }
         public string? Addres { get; }
         public string? Description {  get; }
-        public List<PhoneNumber> PhoneNumbers { get; }
-
+        public ICollection<PhoneNumber> PhoneNumbers { get; }
+        public Category Category { get; } = null!;
+        public Contact() { }
         public Contact(Guid categoryId, string name, string? email, string? addres, string? description)
         {
             Id = Guid.NewGuid();

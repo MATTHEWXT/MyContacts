@@ -1,6 +1,5 @@
 ﻿using MyContacts.Domain.Core.Models;
 using MyContacts.Domain.Enums;
-using System.Xml.Linq;
 namespace MyContacts.Domain.Entities
 {
     public class PhoneNumber : BaseEntity
@@ -9,7 +8,8 @@ namespace MyContacts.Domain.Entities
         public Guid ContactId { get; }
         public string Number { get; }
         public PhoneType Type { get; }
-
+        public Contact Contact { get; } = null!;
+        public PhoneNumber() { }
         public PhoneNumber(Guid contactId, string number, PhoneType type) {
             Id = Guid.NewGuid();
             ContactId = contactId;
