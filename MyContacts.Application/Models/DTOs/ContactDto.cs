@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyContacts.Application.Models.DTOs
 {
-    internal class ContactDto
+    public class ContactDto
     {
     }
 }
