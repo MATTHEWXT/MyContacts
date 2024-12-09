@@ -7,7 +7,7 @@ namespace MyContacts.Domain.Core.Repositories
     {
         Task<T> GetByIdAsync(Guid id);
         Task<IList<T>> ListAsync(IBaseSpecification<T> spec);
-        Task<T> AddAsync(T entity);
+        Task AddAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteRangeAsync(T entity);
     }
