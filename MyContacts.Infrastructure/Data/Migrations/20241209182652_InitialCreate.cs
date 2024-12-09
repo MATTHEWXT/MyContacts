@@ -15,7 +15,8 @@ namespace MyContacts.Infrastructure.Data.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,7 +28,11 @@ namespace MyContacts.Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    CategoryId = table.Column<Guid>(type: "uuid", nullable: false)
+                    CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: true),
+                    Addres = table.Column<string>(type: "text", nullable: true),
+                    Description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -46,7 +51,8 @@ namespace MyContacts.Infrastructure.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ContactId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Number = table.Column<string>(type: "text", nullable: false)
+                    Number = table.Column<string>(type: "text", nullable: false),
+                    Type = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {

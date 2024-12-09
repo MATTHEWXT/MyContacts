@@ -4,15 +4,15 @@ namespace MyContacts.Domain.Entities
 {
     public class Contact : BaseEntity
     {
-        public Guid Id { get; }
-        public Guid CategoryId { get; }
-        public string Name { get; }
-        public string? Email { get; }
-        public string? Addres { get; }
-        public string? Description {  get; }
-        public ICollection<PhoneNumber> PhoneNumbers { get; }
-        public Category Category { get; } = null!;
-        public Contact() { }
+        public Guid Id { get; set; }
+        public Guid CategoryId { get; set; }
+        public string Name { get; set; }
+        public string? Email { get; set; }
+        public string? Addres { get; set; }
+        public string? Description {  get; set; }
+        public ICollection<PhoneNumber> PhoneNumbers { get; set; }
+        public Category Category { get; set; } = null!;
+
         public Contact(Guid categoryId, string name, string? email, string? addres, string? description)
         {
             Id = Guid.NewGuid();

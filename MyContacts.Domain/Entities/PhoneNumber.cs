@@ -4,12 +4,12 @@ namespace MyContacts.Domain.Entities
 {
     public class PhoneNumber : BaseEntity
     {
-        public Guid Id { get; }
-        public Guid ContactId { get; }
-        public string Number { get; }
-        public PhoneType Type { get; }
-        public Contact Contact { get; } = null!;
-        public PhoneNumber() { }
+        public Guid Id { get; set; }
+        public Guid ContactId { get; set; }
+        public string Number { get; set; }
+        public PhoneType Type { get; set; }
+        public Contact Contact { get; set; } = null!;
+
         public PhoneNumber(Guid contactId, string number, PhoneType type) {
             Id = Guid.NewGuid();
             ContactId = contactId;
