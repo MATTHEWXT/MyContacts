@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyContacts.UI", "MyContacts.UI\MyContacts.UI.csproj", "{73A175DA-AEC3-46E3-9BD1-0A22B3C1BE67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyContacts.WebAPI", "MyContacts.WebAPI\MyContacts.WebAPI.csproj", "{050DBD13-3F04-4F3C-9C99-585B68DAD7D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyContacts.WebAPI", "MyContacts.WebAPI\MyContacts.WebAPI.csproj", "{050DBD13-3F04-4F3C-9C99-585B68DAD7D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyContacts.Domain", "MyContacts.Domain\MyContacts.Domain.csproj", "{2A1E87FB-DA76-4E50-A395-13371227C559}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyContacts.Domain", "MyContacts.Domain\MyContacts.Domain.csproj", "{2A1E87FB-DA76-4E50-A395-13371227C559}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyContacts.Infrastructure", "MyContacts.Infrastructure\MyContacts.Infrastructure.csproj", "{BB4EC086-5E0B-4DC2-AF34-B51E8AE99C11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyContacts.Infrastructure", "MyContacts.Infrastructure\MyContacts.Infrastructure.csproj", "{BB4EC086-5E0B-4DC2-AF34-B51E8AE99C11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyContacts.Application", "MyContacts.Application\MyContacts.Application.csproj", "{0A9DA827-B786-4DDA-8CBE-005CAB04C2CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyContacts.Application", "MyContacts.Application\MyContacts.Application.csproj", "{0A9DA827-B786-4DDA-8CBE-005CAB04C2CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyContacts.UI", "MyContacts.UI\MyContacts.UI.csproj", "{02A9EA9A-80E3-4E72-B6C2-5A00C18959BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{73A175DA-AEC3-46E3-9BD1-0A22B3C1BE67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{73A175DA-AEC3-46E3-9BD1-0A22B3C1BE67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{73A175DA-AEC3-46E3-9BD1-0A22B3C1BE67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{73A175DA-AEC3-46E3-9BD1-0A22B3C1BE67}.Release|Any CPU.Build.0 = Release|Any CPU
 		{050DBD13-3F04-4F3C-9C99-585B68DAD7D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{050DBD13-3F04-4F3C-9C99-585B68DAD7D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{050DBD13-3F04-4F3C-9C99-585B68DAD7D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{0A9DA827-B786-4DDA-8CBE-005CAB04C2CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A9DA827-B786-4DDA-8CBE-005CAB04C2CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A9DA827-B786-4DDA-8CBE-005CAB04C2CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02A9EA9A-80E3-4E72-B6C2-5A00C18959BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02A9EA9A-80E3-4E72-B6C2-5A00C18959BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02A9EA9A-80E3-4E72-B6C2-5A00C18959BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02A9EA9A-80E3-4E72-B6C2-5A00C18959BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

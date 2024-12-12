@@ -1,0 +1,262 @@
+﻿@using MyContacts.Application.Models.DTOs
+@using MyContacts.Domain.Enums
+@using MyContacts.UI.Services
+
+@page "/"
+@rendermode InteractiveServer
+@inject ContactService ContactService
+@inject IJSRuntime JSRuntime
+
+<link href="styles/contacts.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+<PageTitle>Contacts</PageTitle>
+
+<h3>Список контактов</h3>
+
+@if (IsLoading)
+{
+    <p>Загрузка контактов...</p>
+}
+else if (!string.IsNullOrEmpty(ErrorMessage))
+{
+    <p class="error-message">@ErrorMessage</p>
+}
+else if (ContactsList == null || !ContactsList.Any())
+{
+    <p>Контакты отсутствуют.</p>
+}
+else
+{
+    <table class="contact-table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Имя</th>
+                <th>Email</th>
+                <th>Телефон</th>
+                <th>Описание</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var contact in ContactsList)
+            {
+                <tr>
+                    <td>
+                        <div class="edit-column">
+                            @if (IsEditingContact == contact.Id)
+                            {
+                                <a href="javascript:void(0)" class="check-icon" @onclick=" async () => await UpdateContact()">
+                                    <i class="fa fa-check"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="javascript:void(0)" @onclick=" () => StartEditContact(contact)">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            }
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            @if (IsEditingContact != contact.Id)
+                            {
+                                @contact.Name
+                            }
+                            else
+                            {
+                                <InputText @bind-Value="UpdateContactDto!.Name" />
+                            }
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            @if (IsEditingContact != contact.Id)
+                            {
+                                @contact.Email
+                            }
+                            else
+                            {
+                                <InputText @bind-Value="UpdateContactDto!.Email" />
+
+                            }
+                        </div>
+                    </td>
+                    <td>
+                        <div class="list-number">
+                            @if (contact.PhoneNumbers != null && contact.PhoneNumbers.Any())
+                            {
+                                @if (IsEditingContact != contact.Id)
+                                {
+
+                                    @foreach (var phone in contact.PhoneNumbers)
+                                    {
+                                        <div>@phone.Number (@phone.Type)</div>
+                                    }
+                                }
+                                else
+                                {
+                                    @foreach (var editPhone in UpdateContactDto!.PhoneNumbers)
+                                    {
+                                        <div>
+                                            <InputText @bind-Value="editPhone.Number" />
+
+                                            <select @bind="editPhone.Type">
+                                                @foreach (var type in Enum.GetValues(typeof(PhoneType)).Cast<PhoneType>())
+                                                {
+                                                    <option value="@type">@type</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    }
+                                    <a href="#" @onclick="AddPhoneToList" class="add-button">Добавить телефон</a>
+                                }
+
+                            }
+                            else
+                            {
+                                @if (IsEditingContact != contact.Id)
+                                {
+                                    <span>Телефонов нет</span>
+                                }
+                                else
+                                {
+                                    <a href="#" @onclick="AddPhoneToList" class="add-button">Добавить телефон</a>
+                                }
+                            }
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            @if (IsEditingContact != contact.Id)
+                            {
+
+                                @contact.Description
+                            }
+                            else
+                            {
+                                <InputTextArea @bind-Value="UpdateContactDto!.Description" />
+
+                            }
+                        </div>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IList<ContactDto>? ContactsList;
+    private ContactDto? ExistsContactDto;
+    private ContactDto? UpdateContactDto;
+
+
+    private bool IsLoading = true;
+    private Guid IsEditingContact = Guid.Empty;
+
+    private string ErrorMessage = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            IsLoading = true;
+            ContactsList = await ContactService.GetAllContactsAsync();
+        }
+        catch (Exception ex)
+        {
+            await JSRuntime.InvokeVoidAsync("console.error", $"Ошибка: {ex.Message}");
+
+            ErrorMessage = "Не удалось загрузить контакты.";
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    private void StartEditContact(ContactDto contact)
+    {
+        IsEditingContact = contact.Id;
+        ExistsContactDto = contact;
+
+        UpdateContactDto = new ContactDto()
+            {
+                Id = contact.Id,
+                Name = contact.Name,
+                Email = contact.Email,
+                Addres = contact.Addres,
+                Description = contact.Description,
+                PhoneNumbers = new List<PhoneNumberDto>()
+            };
+
+        UpdateContactDto.PhoneNumbers = contact.PhoneNumbers
+            .Select(pn => new PhoneNumberDto
+                {
+                    Id =pn.Id,
+                    ContactId = pn.ContactId,
+                    Number = pn.Number,
+                    Type = pn.Type
+                })
+            .ToList();
+    }
+
+    private void AddPhoneToList()
+    {
+        UpdateContactDto!.PhoneNumbers.Add(new PhoneNumberDto());
+    }
+
+    private async Task UpdateContact()
+    {
+        try
+        {
+
+
+            if (UpdateContactDto != null)
+            {
+                if (string.IsNullOrWhiteSpace(UpdateContactDto.Name))
+                {
+                    await JSRuntime.InvokeVoidAsync("alert", "Введите имя");
+                    return;
+                }
+
+                if (!UpdateContactDto.PhoneNumbers.Any(pn => !string.IsNullOrWhiteSpace(pn.Number)))
+                {
+                    await JSRuntime.InvokeVoidAsync("alert", "Введите хотя бы один номер телефона");
+                    return;
+                }
+
+
+                UpdateContactDto.PhoneNumbers = UpdateContactDto.PhoneNumbers
+                        .Where(phone => phone.Number != string.Empty)
+                        .ToList();
+
+                ExistsContactDto!.Name = UpdateContactDto.Name;
+                ExistsContactDto!.Email = UpdateContactDto.Email;
+                ExistsContactDto!.Addres = UpdateContactDto.Addres;
+                ExistsContactDto!.Description = UpdateContactDto.Description;
+                ExistsContactDto!.PhoneNumbers = UpdateContactDto.PhoneNumbers
+                .Select(pn => new PhoneNumberDto
+                    {
+                        Id = pn.Id,
+                        ContactId = pn.ContactId,
+                        Number = pn.Number,
+                        Type = pn.Type
+                    })
+                .ToList();
+
+                await ContactService.UpdateContactAsync(UpdateContactDto);
+                IsEditingContact = Guid.Empty;
+            }
+        }
+        catch (Exception ex)
+        {
+            UpdateContactDto = null;
+            await JSRuntime.InvokeVoidAsync("console.error", $"Ошибка: {ex.Message}");
+        }
+    }
+}
+

@@ -15,12 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\MyContacts.Application\MyContacts.Application.csproj" />
     <ProjectReference Include="..\MyContacts.Infrastructure\MyContacts.Infrastructure.csproj" />
+    <ProjectReference Include="..\MyContacts.UI\MyContacts.UI.csproj" />
   </ItemGroup>
 
 </Project>

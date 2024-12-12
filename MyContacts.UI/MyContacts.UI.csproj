@@ -6,4 +6,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MyContacts.Application\MyContacts.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\styles\CreateContact.css" />
+  </ItemGroup>
+
 </Project>

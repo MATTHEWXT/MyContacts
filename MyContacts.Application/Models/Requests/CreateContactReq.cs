@@ -1,11 +1,17 @@
-﻿using MyContacts.Domain.Entities;
+﻿using MyContacts.Application.Models.DTOs;
+using MyContacts.Domain.Entities;
+using MyContacts.Domain.Enums;
 using System;
 using System.Collections.Generic;
-namespace MyContacts.Application.Models.DTOs
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MyContacts.Application.Models.Requests
 {
-    public class ContactDto
+    public class CreateContactReq
     {
-        public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string? Email { get; set; }
         public string? Addres { get; set; }

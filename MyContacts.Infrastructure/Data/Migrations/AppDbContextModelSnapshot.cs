@@ -22,21 +22,6 @@ namespace MyContacts.Infrastructure.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("MyContacts.Domain.Entities.Category", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
-                });
-
             modelBuilder.Entity("MyContacts.Domain.Entities.Contact", b =>
                 {
                     b.Property<Guid>("Id")
@@ -46,8 +31,8 @@ namespace MyContacts.Infrastructure.Data.Migrations
                     b.Property<string>("Addres")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uuid");
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -55,13 +40,14 @@ namespace MyContacts.Infrastructure.Data.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
 
                     b.ToTable("Contacts");
                 });
@@ -74,6 +60,12 @@ namespace MyContacts.Infrastructure.Data.Migrations
 
                     b.Property<Guid>("ContactId")
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Number")
                         .IsRequired()
@@ -92,17 +84,6 @@ namespace MyContacts.Infrastructure.Data.Migrations
                     b.ToTable("PhoneNumbers");
                 });
 
-            modelBuilder.Entity("MyContacts.Domain.Entities.Contact", b =>
-                {
-                    b.HasOne("MyContacts.Domain.Entities.Category", "Category")
-                        .WithMany("Contacts")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
             modelBuilder.Entity("MyContacts.Domain.Entities.PhoneNumber", b =>
                 {
                     b.HasOne("MyContacts.Domain.Entities.Contact", "Contact")
@@ -112,11 +93,6 @@ namespace MyContacts.Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Contact");
-                });
-
-            modelBuilder.Entity("MyContacts.Domain.Entities.Category", b =>
-                {
-                    b.Navigation("Contacts");
                 });
 
             modelBuilder.Entity("MyContacts.Domain.Entities.Contact", b =>

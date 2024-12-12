@@ -10,8 +10,8 @@ namespace MyContacts.Domain.Entities
         public PhoneType Type { get; set; }
         public Contact Contact { get; set; } = null!;
 
-        public PhoneNumber(Guid contactId, string number, PhoneType type) {
-            Id = Guid.NewGuid();
+        public PhoneNumber(Guid contactId, string number, PhoneType type)
+        {
             ContactId = contactId;
             Number = number;
             Type = type;

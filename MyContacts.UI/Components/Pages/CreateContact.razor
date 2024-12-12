@@ -1,0 +1,155 @@
+﻿@using MyContacts.Application.Models.DTOs
+@using MyContacts.Application.Models.Requests
+@using MyContacts.Domain.Entities
+@using MyContacts.Domain.Enums
+@using MyContacts.UI.Services
+
+@inject ContactService ContactService
+@inject IJSRuntime JSRuntime
+@page "/createContact"
+@rendermode InteractiveServer
+
+<link href="styles/CreateContact.css" rel="stylesheet" />
+
+<PageTitle>Home</PageTitle>
+
+<h3 class="form-title">Создать контакт</h3>
+
+<EditForm Model="@req" OnSubmit="HandleValidSubmit" FormName="CreateContactForm" class="contact-form">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <p class="error-message">@errorMessage</p>
+    <p class="success-message">@successMessage</p>
+
+    <div class="form-group">
+        <label>Имя:</label>
+        <InputText @bind-Value="req.Name" class="input-field" />
+    </div>
+
+    @if (req.PhoneNumbers != null)
+    {
+        <ul class="phone-list">
+            @foreach (var phone in req.PhoneNumbers)
+            {
+                <li class="list-item">
+                    <i class="@phone.Type">@phone.Type</i>
+                    <p>@phone.Number</p>
+                </li>
+            }
+        </ul>
+    }
+
+    <div class="form-group row">
+        <div class="group-item">
+            <label>Телефон:</label>
+            <InputText @bind-Value="phoneNumber" class="input-field" />
+        </div>
+
+        <div class="group-item">
+            <select @bind="phoneType" class="input-select">
+                @foreach (var type in Enum.GetValues(typeof(PhoneType)).Cast<PhoneType>())
+                {
+                    <option value="@type">@type</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <a href="#" @onclick="AddPhoneToList" class="add-button">Добавить телефон</a>
+
+    <div class="form-group">
+        <label>Email:</label>
+        <InputText @bind-Value="req.Email" class="input-field" />
+    </div>
+
+    <div class="form-group">
+        <label>Адрес:</label>
+        <InputText @bind-Value="req.Addres" class="input-field" />
+    </div>
+
+    <div class="form-group">
+        <label>Описание:</label>
+        <InputTextArea @bind-Value="req.Description" class="input-field" />
+    </div>
+
+    <button type="submit" class="submit-button">Создать</button>
+</EditForm>
+
+@if (IsSubmitting)
+{
+    <p class="loading-message">Отправка...</p>
+}
+
+
+@code {
+    private CreateContactReq req = new();
+    private string phoneNumber = string.Empty;
+    private PhoneType phoneType;
+
+    private string successMessage = string.Empty;
+    private string errorMessage = string.Empty;
+    private bool IsSubmitting = false;
+
+    // protected override async Task OnInitializedAsync()
+    // {
+
+    // }
+    private void AddPhoneToList()
+    {
+        if (phoneNumber == string.Empty)
+        {
+            errorMessage = "Введите номер";
+            return;
+        }
+        else if (req.PhoneNumbers.Any(pn => pn.Number == phoneNumber))
+        {
+            errorMessage = "Телефон уже добавлен";
+            return;
+        }
+        req.PhoneNumbers.Add(new PhoneNumberDto()
+            {
+                Number = phoneNumber,
+                Type = phoneType
+            }
+        );
+
+        phoneNumber = string.Empty;
+        errorMessage = string.Empty;
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        IsSubmitting = true;
+
+        try
+        {
+            if (string.IsNullOrEmpty(req.Name))
+            {
+                errorMessage = "Введите имя контакта.";
+                return;
+            }
+
+            if (phoneNumber != string.Empty)
+            {
+                AddPhoneToList();
+            }
+
+            await ContactService.CreateContactAsync(req);
+            req = new();
+            successMessage = "Контакт добавлен";
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error creating contact: {ex.Message}");
+            await JSRuntime.InvokeVoidAsync("console.error", $"Ошибка: {ex.Message}");
+            errorMessage = "Не удалось создать контакт.";
+        }
+        finally
+        {
+            IsSubmitting = false;
+        }
+    }
+}
+
+

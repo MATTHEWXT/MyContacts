@@ -9,7 +9,13 @@ namespace MyContacts.Application.Core.Mapping
         public MappingProfile() {
             CreateMap<Contact, ContactDto>();
             CreateMap<ContactDto, Contact>();
-
+            CreateMap<PhoneNumber, PhoneNumberDto>();
+            CreateMap<PhoneNumberDto, PhoneNumber>()
+                .ConstructUsing(src => new PhoneNumber(
+                    src.ContactId,
+                    src.Number,
+                    src.Type
+                ));
         }
     }
 }

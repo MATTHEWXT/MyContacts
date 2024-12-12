@@ -1,0 +1,137 @@
+﻿h3 {
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+.error-message {
+    color: #d9534f;
+    background-color: #f8d7da;
+    border: 1px solid #f5c2c7;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.contact-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+    .contact-table th,
+    .contact-table td {
+        text-align: center;
+        padding: 10px;
+        border: 1px solid #ddd;
+    }
+        .contact-table th:nth-child(1),
+        .contact-table td:nth-child(1) {
+            width: 5%; 
+            text-align: center;
+        }
+
+        .contact-table th:nth-child(2),
+        .contact-table td:nth-child(2) {
+            width: 15%; 
+        }
+
+        .contact-table th:nth-child(3),
+        .contact-table td:nth-child(3) {
+            width: 25%; 
+        }
+
+        .contact-table th:nth-child(4),
+        .contact-table td:nth-child(4) {
+            width: 25%; 
+        }
+
+        .contact-table th:nth-child(5),
+        .contact-table td:nth-child(5) {
+            width: 30%;
+        }
+
+
+    .contact-table th {
+        background-color: #007bff;
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    .contact-table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .contact-table tr:hover {
+        background-color: #e9ecef;
+    }
+
+    .contact-table td {
+        font-size: 0.9em;
+        color: #555;
+    }
+
+.contact-table td div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    margin-bottom: 0px;
+}
+    .contact-table .list-number{
+        display: flex;
+        flex-direction:column;
+        gap: 10px;
+    }
+
+    .contact-table input,
+    .contact-table textarea {
+        width: 100%;
+        border: 1px solid #007bff;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+
+
+        .contact-table input, .contact-table select, .contact-table textarea:focus {
+            outline: none;
+        }
+
+    .contact-table select
+    {
+        background-color: #f9f9f9; 
+        cursor: pointer;
+        margin-left: 5px;
+    }
+
+        .contact-table select option {
+        }
+
+
+    .contact-table td .check-icon {
+        padding: 2px 6px;
+        background-color: #3CB371;
+        border-radius: 2px;
+    }
+
+        .contact-table td .check-icon i {
+            color: #e9ecef;
+        }
+
+        .contact-table td .check-icon:hover {
+            background-color: #32CD32;
+        }
+
+    .contact-table span {
+        font-style: italic;
+        color: #888;
+    }
+
+p {
+    font-size: 1em;
+    color: #555;
+}
