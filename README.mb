@@ -1,0 +1,89 @@
+
+# MyContacts
+
+Это приложение для управления контактами с возможностью добавления, редактирования и удаления контактов.
+
+## Развертывание
+
+### 1. Предварительные требования
+
+Для развертывания приложения на вашем локальном окружении вам понадобятся следующие инструменты и зависимости:
+
+- .NET SDK (версия 8.0)
+- Visual Studio (или другая среда для разработки, поддерживающая .NET)
+- PostgreSQL (для хранения данных)
+- Git (для клонирования репозитория)
+
+
+### 2. Клонирование репозитория
+
+Склонируйте репозиторий с GitHub и перейдите в папку проекта:
+
+```bash
+git clone https://github.com/MATTHEWXT/MyContacts.git
+cd MyContacts
+```
+
+
+### 3. Открытие проекта в Visual Studio
+
+1. Откройте решение проекта, файл `MyContacts.sln`, в Visual Studio.
+2. Установите все необходимые зависимости, выполнив команду в корне проекта:
+
+```bash
+dotnet restore
+```
+
+
+### 4. Настройка окружения
+
+1. Откройте файл `MyContacts.WebAPI\appsettings.Development.json`.
+2. Настройте строку подключения к базе данных PostgreSQL. Пример строки подключения:
+
+```json
+"ConnectionStrings": {
+  "DefaultConnection": "Host=localhost;Port=5432;Username=your_user;Password=your_password;Database=contactsDb"
+}
+```
+
+3. При необходимости измените порт запуска для проекта `MyContacts.WebAPI` в файле `MyContacts.WebAPI\Properties\launchSettings.json`. Найдите раздел `applicationUrl` и обновите значение:
+
+```json
+"applicationUrl": "https://localhost:7002"
+```
+
+4. В файле `MyContacts.UI\Program.cs` настройте клиента API, указав правильный базовый адрес для вашего API:
+
+```csharp
+builder.Services.AddHttpClient("ApiClient", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7002");
+});
+```
+
+
+### 5. Создание базы данных
+
+1. Перейдите в каталог `MyContacts.Infrastructure`.
+2. Примените миграции базы данных командой
+
+```bash
+dotnet ef database update -s "ПОЛНЫЙ ПУТЬ ПРОЕКТА MyContacts.WebAPI" -p "ПОЛНЫЙ ПУТЬ ПРОЕКТА MyContacts.Infrastructure"
+```
+
+
+### 6. Запуск проектов
+
+1. В Visual Studio запустите проект `MyContacts.WebAPI`. Это позволит вам поднять API-сервис, который будет обслуживать запросы от фронтенда.
+2. Запустите проект `MyContacts.UI`. Это приложение является клиентом, который обращается к API-сервису.
+
+
+### 7. Дополнительные шаги (по необходимости)
+
+1. Если у вас еще нет базы данных PostgreSQL, установите и настройте её.
+2. Примените миграции базы данных, если они есть, для создания необходимых таблиц:
+
+```bash
+dotnet ef database update
+```
+
